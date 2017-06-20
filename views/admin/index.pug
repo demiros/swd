@@ -1,0 +1,16 @@
+extends ../shared/layout
+
+block content
+  .container
+    h6.center The admin page is underConstruction, but once ready, it should provide the functionality for custom naming of the different sections, change of the admin's name as well as the other required options.
+  .above-button-margin
+  .container
+    .row.col.s12.center
+      .col.s4
+        a(href="/templates").waves-effect.waves-light.btn.teal.lighten-2 Templates
+      .col.s4
+        a(href="/tickets").waves-effect.waves-light.btn.teal.lighten-2 Tickets
+      .col.s4
+        a(href="/commands").waves-effect.waves-light.btn.teal.lighten-2 Commands
+  .row
+    .edit-div-height.placeholder(contenteditable="true" placeholder="Enter text here...")

@@ -1,0 +1,48 @@
+doctype html
+html
+  head
+    title= title
+    meta(charset='utf-8')
+    meta(name='viewport', content='width=device-width, initial-scale=1')
+    link(rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/css/materialize.min.css")
+    link(href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet")
+    link(rel="stylesheet" href="/stylesheets/style.css")
+    link(href="https://fonts.googleapis.com/css?family=Roboto:400,500" rel="stylesheet" type="text/css")
+    script(src="https://code.jquery.com/jquery-2.1.1.min.js")
+
+  body
+    ul#dropdown1.dropdown-content
+      li
+        a(href='/templates') T Templates
+      li
+        a(href='#!') T Real Ones
+      li.divider
+      li
+        a(href='#!') A Aliases
+      li
+        a(href='#!') C Matrix
+    nav
+      .nav-wrapper.white
+        a.brand-logo.red-text.accent-2(href='#!')
+          i.material-icons cloud
+          | Dimitar Dimitrov
+        ul.right.hide-on-med-and-down
+          li
+            a(href='sass.html')
+              i.red-text.accent-2.material-icons N
+          li
+            a.dropdown-button.red-text.accent-2(href='#!' data-activates='dropdown1') My Sections
+              i.material-icons.right arrow_drop_down
+          li
+            a(href='collapsible.html')
+              i.red-text.accent-2.material-icons settings
+    .container
+      .row.col.s12
+        .col.s6
+          a(href="/templates").left Back to Search
+        .col.s6
+          a(href="/#").right No logo is the logo.
+
+      block content
+
+    include shared/scripts

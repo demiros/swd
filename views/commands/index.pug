@@ -1,0 +1,46 @@
+extends ../shared/layout
+block content
+  .container
+    .row.col.s12
+      .col.s6
+        h4.center= saveMsg
+        h5
+          a(href="/commands/new") Add | 
+          a(href="/commands/all") List
+      .col.s6
+        p.grey-text.lighten-1 Search for commands:
+      .row
+        form.col.s12
+          .row
+            .input-field.col.s12
+              input#search(type="text" autofocus)
+              label(for="search") Search
+              #main-result
+              #notification-bar
+              #info
+  script.
+    $( document ).ready(function() {
+      console.log( "ready!" );
+      // The KEYUP Logic
+      $('#search').keyup(function(){
+        var urlSearch = 'http://localhost:3000/commands/search/'
+        var searchField = $('#search').val();
+        var urlТоPass = urlSearch + searchField;
+        $('#info').empty();
+        if(searchField.length > 2){
+          $.ajax(urlТоPass, {
+           success: function(data) {
+              for (command of data) {
+                var urlCommand = '/commands/details/' + command._id;
+                var commandInstance = '<div class="row col s12"> <div class="col s10 offset-s1"> <div class="card"> <div class="card-content indigo lighten-4"> <div class="bottom-border-cc"><span class="card-title body-ws">' + command.title + '<a href="#!" data-clipboard-text="' + command.title +'" class="blue-grey-text text-darken-4 copy-command"><i class="tiny material-icons right">work</i></a></span></div><span>Keywords: ' + command.keywords + '</span><a href="' + urlCommand + '" class="teal-text text-darken-2 right">Edit</a> </div> <div class="card-action"> <p class="cyan-text text-darken-2 body-ws">' + command.description + '</p> </div> <div contenteditable="true" class="card-content indigo lighten-5"></div> </div> </div> </div>';
+                $('#info')
+                 .append(commandInstance);
+              }
+           },
+           error: function() {
+              $('#notification-bar').text('ISE 5001 aka type a keyword');
+           }
+          });
+        }
+      });
+    });

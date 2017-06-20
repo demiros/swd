@@ -1,0 +1,23 @@
+extends ../shared/layout
+block content
+  .container
+    //- h4.center= title
+    h5
+      a(href="/commands/") Search,
+      a(href="/commands/new") Add
+    .row
+      each command in commands_list
+        .row.col.s12
+          .col.s10.offset-s1
+            .card
+              .card-content.indigo.lighten-4
+                div.bottom-border-cc
+                  span.card-title.body-ws !{command.title}
+                    a(href="#!" data-clipboard-text=command.title).blue-grey-text.text-darken-4.copy-command
+                      i.tiny.material-icons.right work
+                span Keywords: #{command.keywords}
+                a(href=command.url).teal-text.text-darken-2.right Edit
+              .card-action
+                //TODO each loop in keywords, for the sorting functionalities later.
+                p(id=command._id).cyan-text.text-darken-2.body-ws !{command.description}
+              .card-content.indigo.lighten-5(contenteditable="true")

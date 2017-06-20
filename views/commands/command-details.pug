@@ -1,0 +1,23 @@
+extends ../shared/layout
+block content
+  .container
+    h6
+      != 'You are going to edit this instance. You could <a href="/commands/details/remove/' +command_details._id+ '">remove</a>(<i class="tiny teal-text lighten-3 material-icons">delete</i>) it as well.'
+    form(method='POST' action='')
+      .row
+        .col.s12.offset-s0
+          .card.teal.lighten-3
+            .card-content
+              .input-field.white-text
+                label(for="title") Title:
+                input(name="title" type="text" value!=command_details.title)
+              .input-field
+                label(for="keywords") Keywords:
+                input(name="keywords" type="text" value=command_details.keywords)
+              .input-field
+                label(for="description") Body:
+                textarea.materialize-textarea(name="description" type="text") !{command_details.description}
+            .card-action
+              row.col.s6.offset-s9
+                button.btn.waves-effect.waves-light(name="action") Submit
+                  i.material-icons.right send

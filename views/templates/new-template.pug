@@ -1,0 +1,23 @@
+extends ../shared/layout
+block content
+  .container
+    h5.center.grey-text.text-darken-1= "Fill the fields below!" 
+    h5.center= errors
+
+    form(method='POST' action='')
+      .row
+        .col.s12
+          .row
+            .input-field.col.s8.offset-s2
+              input#title.validate(type="text" name="title" autofocus required pattern=".{3,}")
+              label(for="title") Title
+            .input-field.col.s8.offset-s2
+              input#keywords.validate(type="text" name="keywords")
+              label(for="keywords") Keywords
+            .input-field.col.s8.offset-s2
+              textarea.materialize-textarea#body.validate(type="text" name="body")
+              label(for="body") Body
+          .row.col.s12
+            row.col.s6.offset-s8
+              button.btn.waves-effect.waves-light(name="action") Submit
+                i.material-icons.right send

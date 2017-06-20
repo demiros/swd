@@ -1,0 +1,21 @@
+doctype html
+html
+  head
+    title= title
+    meta(charset='utf-8')
+    meta(name='viewport', content='width=device-width, initial-scale=1')
+    link(rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/css/materialize.min.css")
+    link(href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet")
+    //- CUSTOM CSS
+    //- link(rel="stylesheet" href='css/style-pretty.css')
+    link(rel="stylesheet" href="/stylesheets/style.css")
+    //- INCLUDED PLUGIN CSS ON THIS PAGE
+    link(href="https://fonts.googleapis.com/css?family=Roboto:400,500" rel="stylesheet" type="text/css")
+    //- INCLUDED JQUERY. Its bad, see the ajax for the forms and fix that.
+    script(src="https://code.jquery.com/jquery-2.1.1.min.js")
+
+  body
+    include navbar
+    block content
+
+    include scripts

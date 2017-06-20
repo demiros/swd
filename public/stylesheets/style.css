@@ -1,0 +1,54 @@
+.bottom-border-cc {
+  border-bottom: 1px solid black;
+}
+
+.above-button-margin {
+  margin-top: 90px;
+}
+.sidebar-nav {
+    margin-top: 20px;
+    padding: 0;
+    list-style: none;
+}
+.body-ws {
+  white-space: pre-wrap;
+}
+.edit-btn {
+  margin-right: 5px;
+}
+
+.col.s4 > .btn {
+   width: 165px;
+}
+.edit-div-height {
+  height: 500px;
+}
+
+nav {
+    height: 45px;
+    line-height: 30px;
+}
+
+nav i, nav [class^="mdi-"], nav [class*="mdi-"], nav i.material-icons {
+    height: 45px;
+    line-height: 30px;
+}
+
+nav .button-collapse i {
+    height: 45px;
+    line-height: 30px;
+}
+
+nav .brand-logo {
+    font-size: 1.6rem;
+}
+
+@media only screen and (min-width: 601px){
+    nav, nav .nav-wrapper i, nav a.button-collapse, nav a.button-collapse i {
+        height: 45px;
+        line-height: 45px;
+    }
+}
+a:hover {
+    color: #26a69a;
+}

@@ -1,0 +1,22 @@
+extends ../shared/layout
+block content
+  .container
+    h5.center.grey-text.text-darken-1 Fill the fields below! Store the Ticket for the future!
+    h5.center= errors
+    form(method='POST' id="ticket-form" action='')
+      .row
+        .col.s12
+          .row
+            .input-field.col.s8.offset-s2
+              input#title.validate(type="text" name="title" autofocus required pattern=".{3,}" oninvalid="this.setCustomValidity('Type some more, please!(minLen:3)')")
+              label(for="title") Ticket Title/URL
+            .input-field.col.s8.offset-s2
+              input#keywords.validate(type="text" name="keywords" required)
+              label(for="keywords") Keywords
+            .input-field.col.s8.offset-s2
+              textarea.materialize-textarea#body.validate(type="text" name="body" required)
+              label(for="body") Description
+          .row.col.s12
+            row.col.s6.offset-s8
+              button.btn.waves-effect.waves-light(name="action") Submit
+                i.material-icons.right send

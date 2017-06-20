@@ -1,0 +1,14 @@
+extends ../shared/layout
+block content
+  .container
+    h4.center= title
+    .row
+      each template in templates_list
+        .col.s12.offset-s0
+          .card.blue-grey.darken-1
+            .card-content.white-text
+              span.card-title #{template.title}
+              p(id=template._id).body-ws #{template.body}
+            .card-action
+              a(href=template.url).btn.edit-btn Edit
+              button.btn.waves-effect.waves-light(data-clipboard-text=template.body) Copy

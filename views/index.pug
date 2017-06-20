@@ -1,0 +1,14 @@
+extends shared/layout
+
+block content
+  .above-button-margin
+  .container
+    .row.col.s12.center
+      .col.s4
+        a(href="/templates").waves-effect.waves-light.btn.teal.lighten-2 Templates
+      .col.s4
+        a(href="/tickets").waves-effect.waves-light.btn.teal.lighten-2 Tickets
+      .col.s4
+        a(href="/commands").waves-effect.waves-light.btn.teal.lighten-2 Commands
+  .row
+    .edit-div-height.placeholder(contenteditable="true" placeholder="Enter text here...")

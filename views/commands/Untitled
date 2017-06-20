@@ -1,0 +1,4 @@
+var
+  ojb1 = { value: 1},
+  ojb2 = { value: 2},
+  ojb3 = { value: 3};
