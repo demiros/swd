@@ -19,28 +19,49 @@ block content
               #notification-bar
               #info
   script.
-    $( document ).ready(function() {
-      console.log( "ready!" );
-      // The KEYUP Logic
-      $('#search').keyup(function(){
-        var urlSearch = 'http://localhost:3000/commands/search/'
-        var searchField = $('#search').val();
-        var urlТоPass = urlSearch + searchField;
-        $('#info').empty();
-        if(searchField.length > 2){
-          $.ajax(urlТоPass, {
-           success: function(data) {
-              for (command of data) {
-                var urlCommand = '/commands/details/' + command._id;
-                var commandInstance = '<div class="row col s12"> <div class="col s10 offset-s1"> <div class="card"> <div class="card-content indigo lighten-4"> <div class="bottom-border-cc"><span class="card-title body-ws">' + command.title + '<a href="#!" data-clipboard-text="' + command.title +'" class="blue-grey-text text-darken-4 copy-command"><i class="tiny material-icons right">work</i></a></span></div><span>Keywords: ' + command.keywords + '</span><a href="' + urlCommand + '" class="teal-text text-darken-2 right">Edit</a> </div> <div class="card-action"> <p class="cyan-text text-darken-2 body-ws">' + command.description + '</p> </div> <div contenteditable="true" class="card-content indigo lighten-5"></div> </div> </div> </div>';
-                $('#info')
-                 .append(commandInstance);
-              }
-           },
-           error: function() {
-              $('#notification-bar').text('ISE 5001 aka type a keyword');
-           }
-          });
-        }
-      });
-    });
+      document.addEventListener("DOMContentLoaded", function(){
+        // console.log("The document is ready");
+        var myList = document.getElementById('info');
+        var searchField = document.getElementById('search');
+        var searchApiUrl = 'http://localhost:3000/commands/search/';
+        var infoElement = document.getElementById('info');
+        
+        searchField.addEventListener('keyup', function(event){
+          var getSearchFieldVal = searchField.value;
+          var urlТоPass = searchApiUrl + getSearchFieldVal;
+          
+          infoElement.innerHTML = null;
+
+          if(getSearchFieldVal.length > 2) {
+            fetch(urlТоPass)
+              .then(function(response) {
+                if (!response.ok) {
+                  throw new Error("HTTP error, status = " + response.status);
+                }
+                return response.json();
+              })
+              .then(function(json) {
+                for(var i = 0; i < json.length; i++) {
+
+                  //Test the widget:
+                  var widgetParent = document.createElement('div');
+                  var divRowColS12 = '<div class="row col s12">'
+                  var urlCommand = '/commands/details/' + json[i]._id;
+                  //The actual widget. TODO: Make a template engine for it, if you do not plan to migrate to REACT.
+                  widgetParent.innerHTML = '<div class="row col s12"> <div class="col s10 offset-s1"> <div class="card"> <div class="card-content indigo lighten-4"> <div class="bottom-border-cc"><span class="card-title body-ws">' + json[i].title + '<a href="#!" data-clipboard-text="' + json[i].title +'" class="blue-grey-text text-darken-4 copy-command"><i class="tiny material-icons right">work</i></a></span></div><span>Keywords: ' + json[i].keywords + '</span><a href="' + urlCommand + '" class="teal-text text-darken-2 right">Edit</a> </div> <div class="card-action"> <p class="cyan-text text-darken-2 body-ws">' + json[i].description + '</p> </div> <div contenteditable="true" class="card-content indigo lighten-5"></div> </div> </div> </div>';
+                  myList.appendChild(widgetParent);
+
+                }
+              })
+              .catch(function(error) {
+                var p = document.createElement('p');
+                p.appendChild(
+                  document.createTextNode('Error: ' + error.message)
+                );
+                document.body.insertBefore(p, myList);
+              });
+          }
+        });
+      })
+      
+
