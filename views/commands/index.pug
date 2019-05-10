@@ -45,7 +45,6 @@ block content
 
                   //Test the widget:
                   var widgetParent = document.createElement('div');
-                  var divRowColS12 = '<div class="row col s12">'
                   var urlCommand = '/commands/details/' + json[i]._id;
                   //The actual widget. TODO: Make a template engine for it, if you do not plan to migrate to REACT.
                   widgetParent.innerHTML = '<div class="row col s12"> <div class="col s10 offset-s1"> <div class="card"> <div class="card-content indigo lighten-4"> <div class="bottom-border-cc"><span class="card-title body-ws">' + json[i].title + '<a href="#!" data-clipboard-text="' + json[i].title +'" class="blue-grey-text text-darken-4 copy-command"><i class="tiny material-icons right">work</i></a></span></div><span>Keywords: ' + json[i].keywords + '</span><a href="' + urlCommand + '" class="teal-text text-darken-2 right">Edit</a> </div> <div class="card-action"> <p class="cyan-text text-darken-2 body-ws">' + json[i].description + '</p> </div> <div contenteditable="true" class="card-content indigo lighten-5"></div> </div> </div> </div>';
