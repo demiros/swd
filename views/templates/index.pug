@@ -18,29 +18,46 @@ block content
             #notification-bar
             #info
   script.
-    $( document ).ready(function() {
-      console.log( "ready!" );
-      // The KEYUP Logic
-      $('#search').keyup(function(){
-        var urlSearch = 'http://localhost:3000/templates/search/'
-        var searchField = $('#search').val();
-        var urlForPass = urlSearch + searchField;
-        $('#info').empty();
-        if(searchField.length > 2){
-          $.ajax(urlForPass, {
-           success: function(data) {
-              for (template of data) {
-                var urlTemplate = '/templates/details/' + template._id;
-               // console.log(title + 'and' + $description);
-                var templateInstance = '<row> <div class="col s12 offset-s0"> <div class="card blue-grey darken-1"> <div class="card-content white-text"> <span class="card-title">' + template.title + '</span> <p class="body-ws" id=" ' + template._id + ' ">' + template.body + '</p> </div> <div class="card-action"> <a href=" ' + urlTemplate + ' " class="btn edit-btn">Edit</a> <button type="button" class="btn waves-effect waves-light" data-clipboard-text=" ' + template.body + ' ">Copy</button> </div> </div> </row>'
-                $('#info')
-                 .append(templateInstance);
+        document.addEventListener("DOMContentLoaded", function(){
+            // console.log("The document is ready");
+            var myList = document.getElementById('info');
+            var searchField = document.getElementById('search');
+            var searchApiUrl = 'http://localhost:3000/templates/search/';
+            var infoElement = document.getElementById('info');
+            
+            // The KEYUP Logic and the AJAX
+            searchField.addEventListener('keyup', function(event){
+              var getSearchFieldVal = searchField.value;
+              var urlТоPass = searchApiUrl + getSearchFieldVal;
+              
+              infoElement.innerHTML = null;
+
+              if(getSearchFieldVal.length > 2) {
+                fetch(urlТоPass)
+                  .then(function(response) {
+                    if (!response.ok) {
+                      throw new Error("HTTP error, status = " + response.status);
+                    }
+                    return response.json();
+                  })
+                  .then(function(json) {
+                    for(var i = 0; i < json.length; i++) {
+
+                      var widgetParent = document.createElement('div');
+                      var urlTemplate = '/templates/details/' + json[i]._id;
+                      //The actual widget. TODO: Make a template engine for it, if you do not plan to migrate to REACT.
+                      widgetParent.innerHTML = '<row> <div class="col s12 offset-s0"> <div class="card blue-grey darken-1"> <div class="card-content white-text"> <span class="card-title">' + json[i].title + '</span> <p class="body-ws" id=" ' + json[i]._id + ' ">' + json[i].body + '</p> </div> <div class="card-action"> <a href=" ' + urlTemplate + ' " class="btn edit-btn">Edit</a> <button type="button" class="btn waves-effect waves-light" data-clipboard-text=" ' + json[i].body + ' ">Copy</button> </div> </div> </row>'
+                      myList.appendChild(widgetParent);
+
+                    }
+                  })
+                  .catch(function(error) {
+                    var p = document.createElement('p');
+                    p.appendChild(
+                      document.createTextNode('Error: ' + error.message)
+                    );
+                    document.body.insertBefore(p, myList);
+                  });
               }
-           },
-           error: function() {
-              $('#notification-bar').text('ISE 5001 aka type a keyword');
-           }
-          });
-        }
-      });
-    });
+            });
+          })
