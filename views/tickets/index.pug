@@ -19,30 +19,45 @@ block content
               #notification-bar
               #info
   script.
-    $( document ).ready(function() {
-      console.log( "ready!" );
-      // The KEYUP Logic
-      $('#search').keyup(function(){
-        var urlSearch = 'http://localhost:3000/tickets/search/'
-        var searchField = $('#search').val();
-        var urlТоPass = urlSearch + searchField;
-        $('#info').empty();
-        if(searchField.length > 2){
-          $.ajax(urlТоPass, {
-           success: function(data) {
-              for (ticket of data) {
-                console.log(ticket)
-                var urlTicket = '/tickets/details/' + ticket._id;
-               // console.log(title + 'and' + $description);
-                var ticketInstance = '<div class="row col s12"> <div class="col s10 offset-s1"> <div class="card"> <div class="card-content teal lighten-5"><span class="card-title"><a href="' + ticket.title + '" target="_blank">' + ticket.title + '</a></span> <p id="' + ticket._id + '">' + ticket.description + '</p> </div> <div class="card-action"> <span>Keywords: ' + ticket.keywords + '</span><a class="teal-text text-darken-2 right" href="tickets/details/' + ticket._id + '">Edit</a> </div> </div> </div> </div>';
-                $('#info')
-                 .append(ticketInstance);
-              }
-           },
-           error: function() {
-              $('#notification-bar').text('ISE 5001 aka type a keyword');
-           }
-          });
-        }
-      });
-    });
+        document.addEventListener("DOMContentLoaded", function(){
+                  // console.log("The document is ready");
+                  var myList = document.getElementById('info');
+                  var searchField = document.getElementById('search');
+                  let localHostPort = 3000;
+                  var searchApiUrl = 'http://localhost:' + localHostPort + '/tickets/search/';
+                  var infoElement = document.getElementById('info');
+                  
+                  // The KEYUP Logic and the AJAX
+                  searchField.addEventListener('keyup', function(event){
+                    var getSearchFieldVal = searchField.value;
+                    var urlТоPass = searchApiUrl + getSearchFieldVal;
+                    
+                    infoElement.innerHTML = null;
+
+                    if(getSearchFieldVal.length > 2) {
+                      fetch(urlТоPass)
+                        .then(function(response) {
+                          if (!response.ok) {
+                            throw new Error("HTTP error, status = " + response.status);
+                          }
+                          return response.json();
+                        })
+                        .then(function(json) {
+                          for(var i = 0; i < json.length; i++) {
+                            var widgetParent = document.createElement('div');
+                            var urlTemplate = '/tickets/details/' + json[i]._id;
+                            //The actual widget. TODO: Make a template engine for it, if you do not plan to migrate to REACT.
+                            widgetParent.innerHTML = '<div class="row col s12"> <div class="col s10 offset-s1"> <div class="card"> <div class="card-content teal lighten-5"><span class="card-title"><a href="' + json[i].title + '" target="_blank">' + json[i].title + '</a></span> <p id="' + json[i]._id + '">' + json[i].description + '</p> </div> <div class="card-action"> <span>Keywords: ' + json[i].keywords + '</span><a class="teal-text text-darken-2 right" href="' + urlTemplate + '">Edit</a> </div> </div> </div> </div>'
+                            myList.appendChild(widgetParent);
+                          }
+                        })
+                        .catch(function(error) {
+                          var p = document.createElement('p');
+                          p.appendChild(
+                            document.createTextNode('Error: ' + error.message)
+                          );
+                          document.body.insertBefore(p, myList);
+                        });
+                    }
+                  });
+          })  
